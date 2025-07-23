@@ -1,0 +1,20 @@
+{
+  "name": "learningresourcesinventorysystem-depedfinal",
+  "version": "1.0.0",
+  "description": "A modern, web-based inventory management system designed specifically for the Department of Education (DepEd) to manage learning resources efficiently.",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mssql": "^11.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
