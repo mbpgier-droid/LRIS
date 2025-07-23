@@ -501,7 +501,6 @@ document.addEventListener('click', (e) => {
     if (e.target.closest('.btn-icon') && e.target.closest('.fa-trash')) {
         const row = e.target.closest('tr');
         const tableId = row.closest('table').id || row.closest('table').className;
-        
         if (confirm('Are you sure you want to delete this item?')) {
             // Handle different table types
             if (tableId === 'schoolTableBody' || tableId === 'school-table') {
@@ -517,11 +516,8 @@ document.addEventListener('click', (e) => {
                 row.remove();
                 showNotification('Resource deleted successfully!', 'success');
                 addActivity('resource_deleted', 'Resource removed', `${resourceName} (${resourceCategory}) - ${resourceGradeLevel} was deleted from ${resourceSchool}`);
-            } else {
-                // Generic delete for other tables
-                row.remove();
-                showNotification('Item deleted successfully!', 'success');
             }
+            // Remove the generic delete for other tables
         }
     }
 });
@@ -1538,13 +1534,6 @@ window.addSubjectRow = addSubjectRow;
 window.removeSubjectRow = removeSubjectRow; 
 
 // Export Items functions for global access
-window.addSlmItem = addSlmItem;
-window.addEquipmentItem = addEquipmentItem;
-window.addTvlItem = addTvlItem;
-window.addLessonItem = addLessonItem;
-window.editItem = editItem;
-window.deleteItem = deleteItem;
-window.loadItems = loadItems;
 window.switchItemCategory = switchItemCategory; 
 
 // Logout button functionality
@@ -2040,19 +2029,17 @@ function initializeItems() {
     const addSlmModal = document.getElementById('addSlmModal');
     const closeSlmModal = document.getElementById('closeSlmModal');
     const cancelSlmModal = document.getElementById('cancelSlmModal');
-    const addSlmForm = document.getElementById('addSlmForm');
+    // const addSlmForm = document.getElementById('addSlmForm');
     
     console.log('SLM elements found:', {
         addSlmBtn: !!addSlmBtn,
         addSlmModal: !!addSlmModal,
         closeSlmModal: !!closeSlmModal,
-        cancelSlmModal: !!cancelSlmModal,
-        addSlmForm: !!addSlmForm
+        cancelSlmModal: !!cancelSlmModal
     });
     
     if (addSlmBtn) {
         console.log('Adding click event listener to SLM button');
-        // Remove existing event listeners to prevent duplicates
         addSlmBtn.replaceWith(addSlmBtn.cloneNode(true));
         const newAddSlmBtn = document.getElementById('addSlmBtn');
         newAddSlmBtn.addEventListener('click', () => {
@@ -2064,7 +2051,6 @@ function initializeItems() {
     }
     
     if (closeSlmModal) {
-        // Remove existing event listeners to prevent duplicates
         closeSlmModal.replaceWith(closeSlmModal.cloneNode(true));
         const newCloseSlmModal = document.getElementById('closeSlmModal');
         newCloseSlmModal.addEventListener('click', () => {
@@ -2073,34 +2059,20 @@ function initializeItems() {
     }
     
     if (cancelSlmModal) {
-        // Remove existing event listeners to prevent duplicates
         cancelSlmModal.replaceWith(cancelSlmModal.cloneNode(true));
         const newCancelSlmModal = document.getElementById('cancelSlmModal');
         newCancelSlmModal.addEventListener('click', () => {
             addSlmModal.style.display = 'none';
         });
     }
-    
-    if (addSlmForm) {
-        console.log('Adding submit event listener to SLM form');
-        // Remove existing event listeners to prevent duplicates
-        addSlmForm.replaceWith(addSlmForm.cloneNode(true));
-        const newAddSlmForm = document.getElementById('addSlmForm');
-        newAddSlmForm.addEventListener('submit', (e) => {
-            console.log('SLM form submitted');
-            e.preventDefault();
-            addSlmItem();
-        });
-    } else {
-        console.log('SLM form not found');
-    }
+    // Removed addSlmForm submit event listener
     
     // Equipment functionality
     const addEquipmentBtn = document.getElementById('addEquipmentBtn');
     const addEquipmentModal = document.getElementById('addEquipmentModal');
     const closeEquipmentModal = document.getElementById('closeEquipmentModal');
     const cancelEquipmentModal = document.getElementById('cancelEquipmentModal');
-    const addEquipmentForm = document.getElementById('addEquipmentForm');
+    // const addEquipmentForm = document.getElementById('addEquipmentForm');
     
     if (addEquipmentBtn) {
         addEquipmentBtn.addEventListener('click', () => {
@@ -2119,20 +2091,14 @@ function initializeItems() {
             addEquipmentModal.style.display = 'none';
         });
     }
-    
-    if (addEquipmentForm) {
-        addEquipmentForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            addEquipmentItem();
-        });
-    }
+    // Removed addEquipmentForm submit event listener
     
     // TVL functionality
     const addTvlBtn = document.getElementById('addTvlBtn');
     const addTvlModal = document.getElementById('addTvlModal');
     const closeTvlModal = document.getElementById('closeTvlModal');
     const cancelTvlModal = document.getElementById('cancelTvlModal');
-    const addTvlForm = document.getElementById('addTvlForm');
+    // const addTvlForm = document.getElementById('addTvlForm');
     
     if (addTvlBtn) {
         addTvlBtn.addEventListener('click', () => {
@@ -2151,20 +2117,14 @@ function initializeItems() {
             addTvlModal.style.display = 'none';
         });
     }
-    
-    if (addTvlForm) {
-        addTvlForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            addTvlItem();
-        });
-    }
+    // Removed addTvlForm submit event listener
     
     // Lesson Exemplar functionality
     const addLessonBtn = document.getElementById('addLessonBtn');
     const addLessonModal = document.getElementById('addLessonModal');
     const closeLessonModal = document.getElementById('closeLessonModal');
     const cancelLessonModal = document.getElementById('cancelLessonModal');
-    const addLessonForm = document.getElementById('addLessonForm');
+    // const addLessonForm = document.getElementById('addLessonForm');
     
     if (addLessonBtn) {
         addLessonBtn.addEventListener('click', () => {
@@ -2183,13 +2143,7 @@ function initializeItems() {
             addLessonModal.style.display = 'none';
         });
     }
-    
-    if (addLessonForm) {
-        addLessonForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            addLessonItem();
-        });
-    }
+    // Removed addLessonForm submit event listener
     
     // Check if table bodies exist
     console.log('Checking table bodies...');
@@ -2200,485 +2154,6 @@ function initializeItems() {
     
     // Load existing items
     loadItems();
-}
-
-// Add SLM/SLAS item
-async function addSlmItem() {
-    console.log('addSlmItem function called');
-    
-    // Validate form elements exist
-    const titleElement = document.getElementById('slmTitle');
-    const subjectElement = document.getElementById('slmSubject');
-    const gradeLevelElement = document.getElementById('slmGradeLevel');
-    const quarterElement = document.getElementById('slmQuarter');
-    const quantityElement = document.getElementById('slmQuantity');
-    const statusElement = document.getElementById('slmStatus');
-    const descriptionElement = document.getElementById('slmDescription');
-    
-    if (!titleElement || !subjectElement || !gradeLevelElement || !quarterElement || !quantityElement || !statusElement) {
-        console.error('One or more form elements not found:', {
-            titleElement: !!titleElement,
-            subjectElement: !!subjectElement,
-            gradeLevelElement: !!gradeLevelElement,
-            quarterElement: !!quarterElement,
-            quantityElement: !!quantityElement,
-            statusElement: !!statusElement
-        });
-        showNotification('Error: Form elements not found. Please refresh the page.', 'error');
-        return;
-    }
-    
-    const title = titleElement.value.trim();
-    const subject = subjectElement.value.trim();
-    const gradeLevel = gradeLevelElement.value;
-    const quarter = quarterElement.value;
-    const quantity = quantityElement.value;
-    const status = statusElement.value;
-    const description = descriptionElement ? descriptionElement.value.trim() : '';
-    
-    // Validate required fields
-    if (!title || !subject || !gradeLevel || !quarter || !quantity || !status) {
-        showNotification('Please fill in all required fields.', 'error');
-        return;
-    }
-    
-    console.log('Form values:', { title, subject, gradeLevel, quarter, quantity, status, description });
-    
-    try {
-        console.log('Sending request to /api/items/slm...');
-        const response = await fetch('/api/items/slm', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                title,
-                subject,
-                gradeLevel,
-                quarter,
-                quantity: parseInt(quantity),
-                status,
-                description
-            })
-        });
-        
-        console.log('Response status:', response.status);
-        console.log('Response ok:', response.ok);
-        
-        if (response.ok) {
-            const result = await response.json();
-            console.log('Success response:', result);
-            
-            // Close modal and reset form
-            const modal = document.getElementById('addSlmModal');
-            const form = document.getElementById('addSlmForm');
-            if (modal) modal.style.display = 'none';
-            if (form) form.reset();
-            
-            // Reload items to show the new data
-            await loadItems();
-            
-            showNotification('SLM/SLAS item added successfully!', 'success');
-        } else {
-            const errorText = await response.text();
-            console.error('Server error response:', errorText);
-            throw new Error(`Server error: ${response.status} - ${errorText}`);
-        }
-    } catch (error) {
-        console.error('Error adding SLM item:', error);
-        showNotification(`Error adding SLM/SLAS item: ${error.message}`, 'error');
-    }
-}
-
-// Add Equipment item
-async function addEquipmentItem() {
-    const name = document.getElementById('equipmentName').value.trim();
-    const type = document.getElementById('equipmentType').value;
-    const quantity = document.getElementById('equipmentQuantity').value;
-    const status = document.getElementById('equipmentStatus').value;
-    const description = document.getElementById('equipmentDescription').value.trim();
-    
-    // Validate required fields
-    if (!name || !type || !quantity || !status) {
-        showNotification('Please fill in all required fields.', 'error');
-        return;
-    }
-    
-    try {
-        const response = await fetch('/api/items/equipment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                equipmentName: name,
-                equipmentType: type,
-                quantity: parseInt(quantity),
-                status,
-                description
-            })
-        });
-        
-        if (response.ok) {
-            const result = await response.json();
-            
-            // Close modal and reset form
-            document.getElementById('addEquipmentModal').style.display = 'none';
-            document.getElementById('addEquipmentForm').reset();
-            
-            // Reload items to show the new data
-            await loadItems();
-            
-            showNotification('Equipment item added successfully!', 'success');
-        } else {
-            const errorText = await response.text();
-            throw new Error(`Server error: ${response.status} - ${errorText}`);
-        }
-    } catch (error) {
-        console.error('Error adding equipment item:', error);
-        showNotification(`Error adding equipment item: ${error.message}`, 'error');
-    }
-}
-
-// Add TVL item
-async function addTvlItem() {
-    const name = document.getElementById('tvlName').value.trim();
-    const track = document.getElementById('tvlTrack').value;
-    const strand = document.getElementById('tvlStrand').value.trim();
-    const gradeLevel = document.getElementById('tvlGradeLevel').value;
-    const quantity = document.getElementById('tvlQuantity').value;
-    const status = document.getElementById('tvlStatus').value;
-    const description = document.getElementById('tvlDescription').value.trim();
-    
-    // Validate required fields
-    if (!name || !track || !strand || !gradeLevel || !quantity || !status) {
-        showNotification('Please fill in all required fields.', 'error');
-        return;
-    }
-    
-    try {
-        const response = await fetch('/api/items/tvl', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                itemName: name,
-                track,
-                strand,
-                gradeLevel,
-                quantity: parseInt(quantity),
-                status,
-                description
-            })
-        });
-        
-        if (response.ok) {
-            const result = await response.json();
-            
-            // Close modal and reset form
-            document.getElementById('addTvlModal').style.display = 'none';
-            document.getElementById('addTvlForm').reset();
-            
-            // Reload items to show the new data
-            await loadItems();
-            
-            showNotification('TVL item added successfully!', 'success');
-        } else {
-            const errorText = await response.text();
-            throw new Error(`Server error: ${response.status} - ${errorText}`);
-        }
-    } catch (error) {
-        console.error('Error adding TVL item:', error);
-        showNotification(`Error adding TVL item: ${error.message}`, 'error');
-    }
-}
-
-// Add Lesson Exemplar item
-async function addLessonItem() {
-    const title = document.getElementById('lessonTitle').value.trim();
-    const subject = document.getElementById('lessonSubject').value.trim();
-    const gradeLevel = document.getElementById('lessonGradeLevel').value;
-    const quarter = document.getElementById('lessonQuarter').value;
-    const week = document.getElementById('lessonWeek').value;
-    const status = document.getElementById('lessonStatus').value;
-    const description = document.getElementById('lessonDescription').value.trim();
-    
-    // Validate required fields
-    if (!title || !subject || !gradeLevel || !quarter || !week || !status) {
-        showNotification('Please fill in all required fields.', 'error');
-        return;
-    }
-    
-    try {
-        const response = await fetch('/api/items/lesson', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                lessonTitle: title,
-                subject,
-                gradeLevel,
-                quarter,
-                week: parseInt(week),
-                status,
-                description
-            })
-        });
-        
-        if (response.ok) {
-            const result = await response.json();
-            
-            // Close modal and reset form
-            document.getElementById('addLessonModal').style.display = 'none';
-            document.getElementById('addLessonForm').reset();
-            
-            // Reload items to show the new data
-            await loadItems();
-            
-            showNotification('Lesson Exemplar added successfully!', 'success');
-        } else {
-            const errorText = await response.text();
-            throw new Error(`Server error: ${response.status} - ${errorText}`);
-        }
-    } catch (error) {
-        console.error('Error adding lesson exemplar item:', error);
-        showNotification(`Error adding Lesson Exemplar: ${error.message}`, 'error');
-    }
-}
-
-// This function is no longer needed as we're using database now
-// function saveItems(category, item) {
-//     const items = JSON.parse(localStorage.getItem(`items_${category}`) || '[]');
-//     items.push(item);
-//     localStorage.setItem(`items_${category}`, JSON.stringify(items));
-// }
-
-// Load items from database
-async function loadItems() {
-    try {
-        console.log('Loading items from database...');
-        
-        // Load SLM/SLAS items
-        console.log('Fetching SLM items...');
-        const slmResponse = await fetch('/api/items/slm');
-        console.log('SLM response status:', slmResponse.status);
-        
-        if (slmResponse.ok) {
-            const slmItems = await slmResponse.json();
-            console.log('SLM items loaded:', slmItems.length);
-            console.log('SLM items data:', slmItems);
-            populateSLMTable(slmItems);
-        } else {
-            console.error('SLM response not ok:', slmResponse.status, slmResponse.statusText);
-            populateSLMTable([]);
-            showNotification('Error loading SLM items from database.', 'error');
-        }
-
-        // Load Equipment items
-        console.log('Fetching Equipment items...');
-        const equipmentResponse = await fetch('/api/items/equipment');
-        console.log('Equipment response status:', equipmentResponse.status);
-        
-        if (equipmentResponse.ok) {
-            const equipmentItems = await equipmentResponse.json();
-            console.log('Equipment items loaded:', equipmentItems.length);
-            console.log('Equipment items data:', equipmentItems);
-            populateEquipmentTable(equipmentItems);
-        } else {
-            console.error('Equipment response not ok:', equipmentResponse.status, equipmentResponse.statusText);
-            populateEquipmentTable([]);
-            showNotification('Error loading Equipment items from database.', 'error');
-        }
-
-        // Load TVL items
-        console.log('Fetching TVL items...');
-        const tvlResponse = await fetch('/api/items/tvl');
-        console.log('TVL response status:', tvlResponse.status);
-        
-        if (tvlResponse.ok) {
-            const tvlItems = await tvlResponse.json();
-            console.log('TVL items loaded:', tvlItems.length);
-            console.log('TVL items data:', tvlItems);
-            populateTVLTable(tvlItems);
-        } else {
-            console.error('TVL response not ok:', tvlResponse.status, tvlResponse.statusText);
-            populateTVLTable([]);
-            showNotification('Error loading TVL items from database.', 'error');
-        }
-
-        // Load Lesson Exemplar items
-        console.log('Fetching Lesson items...');
-        const lessonResponse = await fetch('/api/items/lesson');
-        console.log('Lesson response status:', lessonResponse.status);
-        
-        if (lessonResponse.ok) {
-            const lessonItems = await lessonResponse.json();
-            console.log('Lesson items loaded:', lessonItems.length);
-            console.log('Lesson items data:', lessonItems);
-            populateLessonTable(lessonItems);
-        } else {
-            console.error('Lesson response not ok:', lessonResponse.status, lessonResponse.statusText);
-            populateLessonTable([]);
-            showNotification('Error loading Lesson Exemplar items from database.', 'error');
-        }
-        
-        console.log('Items loading completed');
-    } catch (error) {
-        console.error('Error loading items:', error);
-        
-        // Check if it's a network error (server not running)
-        if (error.name === 'TypeError' && error.message.includes('fetch')) {
-            showNotification('Cannot connect to server. Please make sure the server is running.', 'error');
-        } else {
-            showNotification('Error loading items from database.', 'error');
-        }
-    }
-}
-
-// Helper functions to populate tables
-function populateSLMTable(items) {
-    const slmTableBody = document.getElementById('slmTableBody');
-    if (slmTableBody) {
-        slmTableBody.innerHTML = '';
-        if (items && items.length > 0) {
-            items.forEach((item, index) => {
-                const row = document.createElement('tr');
-                // Always use the real SLMItemID from the database
-                row.setAttribute('data-id', item.SLMItemID);
-                row.innerHTML = `
-                    <td>${item.Title || ''}</td>
-                    <td>${item.Subject || ''}</td>
-                    <td>${item.GradeLevel || ''}</td>
-                    <td>${item.Quarter || ''}</td>
-                    <td>${item.Quantity || 0}</td>
-                    <td><span class="status ${(item.Status || '').toLowerCase().replace(' ', '-')}">${item.Status || ''}</span></td>
-                    <td>
-                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
-                    </td>
-                `;
-                slmTableBody.appendChild(row);
-            });
-        } else {
-            const row = document.createElement('tr');
-            row.innerHTML = '<td colspan="7" style="text-align: center; color: #666;">No SLM/SLAS items found</td>';
-            slmTableBody.appendChild(row);
-        }
-    }
-}
-
-function populateEquipmentTable(items) {
-    const equipmentTableBody = document.getElementById('equipmentTableBody');
-    if (equipmentTableBody) {
-        equipmentTableBody.innerHTML = '';
-        if (items && items.length > 0) {
-            items.forEach((item, index) => {
-                const row = document.createElement('tr');
-                row.setAttribute('data-id', item.EquipmentID || item.id || item._id || '');
-                row.innerHTML = `
-                    <td>${item.EquipmentName || ''}</td>
-                    <td>${item.EquipmentType || ''}</td>
-                    <td>${item.Quantity || 0}</td>
-                    <td><span class="status ${(item.Status || '').toLowerCase().replace(' ', '-')}">${item.Status || ''}</span></td>
-                    <td>
-                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
-                    </td>
-                `;
-                equipmentTableBody.appendChild(row);
-            });
-        } else {
-            const row = document.createElement('tr');
-            row.innerHTML = '<td colspan="5" style="text-align: center; color: #666;">No Equipment items found</td>';
-            equipmentTableBody.appendChild(row);
-        }
-    }
-}
-
-function populateTVLTable(items) {
-    const tvlTableBody = document.getElementById('tvlTableBody');
-    if (tvlTableBody) {
-        tvlTableBody.innerHTML = '';
-        if (items && items.length > 0) {
-            items.forEach(item => {
-                const row = document.createElement('tr');
-                row.setAttribute('data-id', item.TVLItemID || item.id || item._id || '');
-                row.innerHTML = `
-                    <td>${item.ItemName || ''}</td>
-                    <td>${item.Track || ''}</td>
-                    <td>${item.Strand || ''}</td>
-                    <td>${item.GradeLevel || ''}</td>
-                    <td>${item.Quantity || 0}</td>
-                    <td><span class="status ${(item.Status || '').toLowerCase().replace(' ', '-')}">${item.Status || ''}</span></td>
-                    <td>
-                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
-                    </td>
-                `;
-                tvlTableBody.appendChild(row);
-            });
-        } else {
-            const row = document.createElement('tr');
-            row.innerHTML = '<td colspan="7" style="text-align: center; color: #666;">No TVL items found</td>';
-            tvlTableBody.appendChild(row);
-        }
-    }
-}
-
-function populateLessonTable(items) {
-    const lessonTableBody = document.getElementById('lessonTableBody');
-    if (lessonTableBody) {
-        lessonTableBody.innerHTML = '';
-        if (items && items.length > 0) {
-            items.forEach(item => {
-                const row = document.createElement('tr');
-                row.setAttribute('data-id', item.LessonID || item.id || item._id || '');
-                row.innerHTML = `
-                    <td>${item.LessonTitle || ''}</td>
-                    <td>${item.Subject || ''}</td>
-                    <td>${item.GradeLevel || ''}</td>
-                    <td>${item.Quarter || ''}</td>
-                    <td>${item.Week || ''}</td>
-                    <td><span class="status ${(item.Status || '').toLowerCase().replace(' ', '-')}">${item.Status || ''}</span></td>
-                    <td>
-                        <button class="btn-icon"><i class="fas fa-edit"></i></button>
-                        <button class="btn-icon"><i class="fas fa-trash"></i></button>
-                    </td>
-                `;
-                lessonTableBody.appendChild(row);
-            });
-        } else {
-            const row = document.createElement('tr');
-            row.innerHTML = '<td colspan="7" style="text-align: center; color: #666;">No Lesson Exemplar items found</td>';
-            lessonTableBody.appendChild(row);
-        }
-    }
-}
-
-
-// Delete item function
-async function deleteItem(category, itemId) {
-    if (confirm('Are you sure you want to delete this item?')) {
-        try {
-            const response = await fetch(`/api/items/${category}/${itemId}`, {
-                method: 'DELETE'
-            });
-            
-            if (response.ok) {
-                // Reload the table
-                loadItems();
-                showNotification('Item deleted successfully!', 'success');
-            } else {
-                const errorText = await response.text();
-                throw new Error(`Server error: ${response.status} - ${errorText}`);
-            }
-        } catch (error) {
-            console.error('Error deleting item:', error);
-            showNotification(`Error deleting item: ${error.message}`, 'error');
-        }
-    }
 }
 
 window.switchItemCategory = switchItemCategory;
@@ -3591,149 +3066,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 // --- End Item Category & Item Dropdown Logic (Fetch from Backend) ---
 
-// --- Edit/Delete Functionality for All Item Categories in Items Section (Robust Event Delegation) ---
-document.addEventListener('DOMContentLoaded', function() {
-    function getCategoryConfig(category) {
-        if (category === 'slm') {
-            return {
-                endpoint: '/api/items/slm/',
-                fields: ['Title', 'Subject', 'GradeLevel', 'Quarter', 'Quantity', 'Status', 'Description'],
-                idField: 'SLMItemID',
-                modalTitle: 'Edit SLM/SLAS Item'
-            };
-        } else if (category === 'equipment') {
-            return {
-                endpoint: '/api/items/equipment/',
-                fields: ['EquipmentName', 'EquipmentType', 'Quantity', 'Status', 'Description'],
-                idField: 'EquipmentID',
-                modalTitle: 'Edit Equipment Item'
-            };
-        } else if (category === 'tvl') {
-            return {
-                endpoint: '/api/items/tvl/',
-                fields: ['ItemName', 'Track', 'Strand', 'GradeLevel', 'Quantity', 'Status', 'Description'],
-                idField: 'TVLItemID',
-                modalTitle: 'Edit TVL Item'
-            };
-        } else if (category === 'lesson') {
-            return {
-                endpoint: '/api/items/lesson/',
-                fields: ['LessonTitle', 'Subject', 'GradeLevel', 'Quarter', 'Week', 'Status', 'Description'],
-                idField: 'LessonID',
-                modalTitle: 'Edit Lesson Exemplar Item'
-            };
-        }
-        return null;
-    }
-
-    document.querySelectorAll('.items-table').forEach(table => {
-        table.addEventListener('click', async function(e) {
-            const btn = e.target.closest('.btn-icon');
-            if (!btn) return;
-            const isEdit = btn.querySelector('.fa-edit');
-            const isDelete = btn.querySelector('.fa-trash');
-            const row = btn.closest('tr');
-            if (!row) return;
-            let category = '';
-            if (table.id === 'slmTableBody' || table.closest('#slm-content')) category = 'slm';
-            else if (table.id === 'equipmentTableBody' || table.closest('#equipment-content')) category = 'equipment';
-            else if (table.id === 'tvlTableBody' || table.closest('#tvl-content')) category = 'tvl';
-            else if (table.id === 'lessonTableBody' || table.closest('#lesson-content')) category = 'lesson';
-            const config = getCategoryConfig(category);
-            if (!config) return;
-            let itemId = row.getAttribute('data-id');
-            if (!itemId) itemId = row.rowIndex;
-
-            // Edit
-            if (isEdit) {
-                let itemData = {};
-                try {
-                    const res = await fetch(config.endpoint + itemId);
-                    if (res.ok) itemData = await res.json();
-                } catch (err) { showNotification('Error fetching item data', 'error'); return; }
-                const modal = document.createElement('div');
-                modal.className = 'modal';
-                modal.style.display = 'flex';
-                let formHtml = `<div class="modal-content"><div class="modal-header"><h3>${config.modalTitle}</h3><button class="modal-close" onclick="this.closest('.modal').remove()">&times;</button></div><div class="modal-body"><form id="editItemForm">`;
-                config.fields.forEach(field => {
-                    const val = itemData[field] || '';
-                    if (field === 'Description') {
-                        formHtml += `<div class="form-group"><label>${field}</label><textarea name="${field}" rows="2">${val}</textarea></div>`;
-                    } else {
-                        formHtml += `<div class="form-group"><label>${field}</label><input name="${field}" value="${val}" required></div>`;
-                    }
-                });
-                formHtml += `<div class="form-actions"><button type="button" class="btn-secondary" onclick="this.closest('.modal').remove()">Cancel</button><button type="submit" class="btn-primary">Update</button></div></form></div></div>`;
-                modal.innerHTML = formHtml;
-                document.body.appendChild(modal);
-                document.getElementById('editItemForm').addEventListener('submit', async function(ev) {
-                    ev.preventDefault();
-                    const formData = new FormData(this);
-                    const data = {};
-                    config.fields.forEach(field => { data[field] = formData.get(field); });
-                    try {
-                        const res = await fetch(config.endpoint + itemId, {
-                            method: 'PUT',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data)
-                        });
-                        if (res.ok) {
-                            showNotification('Item updated!', 'success');
-                            modal.remove();
-                            loadItems();
-                        } else {
-                            showNotification('Update failed', 'error');
-                        }
-                    } catch (err) {
-                        showNotification('Error updating item', 'error');
-                    }
-                });
-            }
-            // Delete
-            if (isDelete) {
-                if (!confirm('Are you sure you want to delete this item?')) return;
-                try {
-                    const res = await fetch(config.endpoint + itemId, { method: 'DELETE' });
-                    if (res.ok) {
-                        showNotification('Item deleted!', 'success');
-                        row.remove();
-                        loadItems();
-                    } else {
-                        showNotification('Delete failed', 'error');
-                    }
-                } catch (err) {
-                    showNotification('Error deleting item', 'error');
-                }
-            }
-        });
-    });
-});
-// --- End Edit/Delete Functionality for All Item Categories (Robust Event Delegation) ---
-
-// Robust event delegation for SLM/SLAS delete
-// Remove any previous direct event listeners and use this
-const slmTableBody = document.getElementById('slmTableBody');
-if (slmTableBody) {
-    slmTableBody.addEventListener('click', async function(e) {
-        const btn = e.target.closest('.btn-icon');
-        if (!btn) return;
-        const row = btn.closest('tr');
-        if (!row) return;
-        const itemId = row.getAttribute('data-id');
-        if (!itemId) return;
-
-        // Debug: See which button was clicked
-        console.log('SLM/SLAS Action button clicked:', btn, 'Row:', row, 'SLMItemID:', itemId);
-
-        if (btn.querySelector('.fa-edit')) {
-            console.log('Edit button clicked for SLMItemID:', itemId);
-            // ... (existing edit logic here)
-        } else if (btn.querySelector('.fa-trash')) {
-            console.log('Delete button clicked for SLMItemID:', itemId);
-            // ... (existing delete logic here)
-        }
-    });
-}
 
 // Robust event delegation for SLM/SLAS edit and delete
 // Use the already declared slmTableBody from earlier in the file
@@ -3881,59 +3213,93 @@ function getItemEditConfig(category) {
         return {
             endpoint: '/api/items/slm/',
             fields: [
-                { label: 'Title', id: 'editSlmTitle', type: 'text' },
-                { label: 'Subject', id: 'editSlmSubject', type: 'text' },
-                { label: 'Grade Level', id: 'editSlmGradeLevel', type: 'text' },
-                { label: 'Quarter', id: 'editSlmQuarter', type: 'text' },
-                { label: 'Quantity', id: 'editSlmQuantity', type: 'number' },
-                { label: 'Status', id: 'editSlmStatus', type: 'text' },
-                { label: 'Description', id: 'editSlmDescription', type: 'textarea' }
+                { label: 'Title', id: 'editSlmTitle', type: 'text', key: 'Title' },
+                { label: 'Subject', id: 'editSlmSubject', type: 'text', key: 'Subject' },
+                { label: 'Grade Level', id: 'editSlmGradeLevel', type: 'text', key: 'GradeLevel' },
+                { label: 'Quarter', id: 'editSlmQuarter', type: 'text', key: 'Quarter' },
+                { label: 'Quantity', id: 'editSlmQuantity', type: 'number', key: 'Quantity' },
+                { label: 'Status', id: 'editSlmStatus', type: 'text', key: 'Status' },
+                { label: 'Description', id: 'editSlmDescription', type: 'textarea', key: 'Description' }
             ],
+            modalTitle: 'Edit SLM/SLAS Item',
             idField: 'SLMItemID',
-            modalTitle: 'Edit SLM/SLAS Item'
+            buildPayload: (fd) => ({
+                title: fd.get('editSlmTitle'),
+                subject: fd.get('editSlmSubject'),
+                gradeLevel: fd.get('editSlmGradeLevel'),
+                quarter: fd.get('editSlmQuarter'),
+                quantity: parseInt(fd.get('editSlmQuantity')),
+                status: fd.get('editSlmStatus'),
+                description: fd.get('editSlmDescription')
+            })
         };
     } else if (category === 'equipment') {
         return {
             endpoint: '/api/items/equipment/',
             fields: [
-                { label: 'Equipment Name', id: 'editEquipmentName', type: 'text' },
-                { label: 'Equipment Type', id: 'editEquipmentType', type: 'text' },
-                { label: 'Quantity', id: 'editEquipmentQuantity', type: 'number' },
-                { label: 'Status', id: 'editEquipmentStatus', type: 'text' },
-                { label: 'Description', id: 'editEquipmentDescription', type: 'textarea' }
+                { label: 'Equipment Name', id: 'editEquipmentName', type: 'text', key: 'EquipmentName' },
+                { label: 'Equipment Type', id: 'editEquipmentType', type: 'text', key: 'EquipmentType' },
+                { label: 'Quantity', id: 'editEquipmentQuantity', type: 'number', key: 'Quantity' },
+                { label: 'Status', id: 'editEquipmentStatus', type: 'text', key: 'Status' },
+                { label: 'Description', id: 'editEquipmentDescription', type: 'textarea', key: 'Description' }
             ],
+            modalTitle: 'Edit Equipment Item',
             idField: 'EquipmentID',
-            modalTitle: 'Edit Equipment Item'
+            buildPayload: (fd) => ({
+                equipmentName: fd.get('editEquipmentName'),
+                equipmentType: fd.get('editEquipmentType'),
+                quantity: parseInt(fd.get('editEquipmentQuantity')),
+                status: fd.get('editEquipmentStatus'),
+                description: fd.get('editEquipmentDescription')
+            })
         };
     } else if (category === 'tvl') {
         return {
             endpoint: '/api/items/tvl/',
             fields: [
-                { label: 'Item Name', id: 'editTvlName', type: 'text' },
-                { label: 'Track', id: 'editTvlTrack', type: 'text' },
-                { label: 'Strand', id: 'editTvlStrand', type: 'text' },
-                { label: 'Grade Level', id: 'editTvlGradeLevel', type: 'text' },
-                { label: 'Quantity', id: 'editTvlQuantity', type: 'number' },
-                { label: 'Status', id: 'editTvlStatus', type: 'text' },
-                { label: 'Description', id: 'editTvlDescription', type: 'textarea' }
+                { label: 'Item Name', id: 'editTvlName', type: 'text', key: 'ItemName' },
+                { label: 'Track', id: 'editTvlTrack', type: 'text', key: 'Track' },
+                { label: 'Strand', id: 'editTvlStrand', type: 'text', key: 'Strand' },
+                { label: 'Grade Level', id: 'editTvlGradeLevel', type: 'text', key: 'GradeLevel' },
+                { label: 'Quantity', id: 'editTvlQuantity', type: 'number', key: 'Quantity' },
+                { label: 'Status', id: 'editTvlStatus', type: 'text', key: 'Status' },
+                { label: 'Description', id: 'editTvlDescription', type: 'textarea', key: 'Description' }
             ],
+            modalTitle: 'Edit TVL Item',
             idField: 'TVLItemID',
-            modalTitle: 'Edit TVL Item'
+            buildPayload: (fd) => ({
+                itemName: fd.get('editTvlName'),
+                track: fd.get('editTvlTrack'),
+                strand: fd.get('editTvlStrand'),
+                gradeLevel: fd.get('editTvlGradeLevel'),
+                quantity: parseInt(fd.get('editTvlQuantity')),
+                status: fd.get('editTvlStatus'),
+                description: fd.get('editTvlDescription')
+            })
         };
     } else if (category === 'lesson') {
         return {
             endpoint: '/api/items/lesson/',
             fields: [
-                { label: 'Lesson Title', id: 'editLessonTitle', type: 'text' },
-                { label: 'Subject', id: 'editLessonSubject', type: 'text' },
-                { label: 'Grade Level', id: 'editLessonGradeLevel', type: 'text' },
-                { label: 'Quarter', id: 'editLessonQuarter', type: 'text' },
-                { label: 'Week', id: 'editLessonWeek', type: 'number' },
-                { label: 'Status', id: 'editLessonStatus', type: 'text' },
-                { label: 'Description', id: 'editLessonDescription', type: 'textarea' }
+                { label: 'Lesson Title', id: 'editLessonTitle', type: 'text', key: 'LessonTitle' },
+                { label: 'Subject', id: 'editLessonSubject', type: 'text', key: 'Subject' },
+                { label: 'Grade Level', id: 'editLessonGradeLevel', type: 'text', key: 'GradeLevel' },
+                { label: 'Quarter', id: 'editLessonQuarter', type: 'text', key: 'Quarter' },
+                { label: 'Week', id: 'editLessonWeek', type: 'number', key: 'Week' },
+                { label: 'Status', id: 'editLessonStatus', type: 'text', key: 'Status' },
+                { label: 'Description', id: 'editLessonDescription', type: 'textarea', key: 'Description' }
             ],
+            modalTitle: 'Edit Lesson Exemplar Item',
             idField: 'LessonID',
-            modalTitle: 'Edit Lesson Exemplar Item'
+            buildPayload: (fd) => ({
+                lessonTitle: fd.get('editLessonTitle'),
+                subject: fd.get('editLessonSubject'),
+                gradeLevel: fd.get('editLessonGradeLevel'),
+                quarter: fd.get('editLessonQuarter'),
+                week: parseInt(fd.get('editLessonWeek')),
+                status: fd.get('editLessonStatus'),
+                description: fd.get('editLessonDescription')
+            })
         };
     }
     return null;
@@ -3961,16 +3327,13 @@ function getCategoryFromTable(table) {
         if (!itemId) return;
         const category = getCategoryFromTable(tableBody);
         const config = getItemEditConfig(category);
-        console.log('Edit icon clicked in', tableId, 'row:', row, 'itemId:', itemId);
         if (!config) return;
         // Fetch full item data from backend
         let itemData = {};
         try {
-            const res = await fetch(config.endpoint);
+            const res = await fetch(config.endpoint + itemId);
             if (res.ok) {
-                const items = await res.json();
-                const found = items.find(i => String(i[config.idField]) === String(itemId));
-                if (found) itemData = found;
+                itemData = await res.json();
             }
         } catch {}
         // Create modal
@@ -4021,20 +3384,669 @@ function getCategoryFromTable(table) {
 });
 // --- END: Edit functionality for Items section tables ---
 
-document.addEventListener('DOMContentLoaded', function() {
-  ['slmTableBody', 'equipmentTableBody', 'tvlTableBody', 'lessonTableBody'].forEach(tableId => {
-    const tableBody = document.getElementById(tableId);
-    if (!tableBody) return;
-    tableBody.addEventListener('click', function(e) {
-      const btn = e.target.closest('.btn-icon');
-      if (!btn) return;
-      if (!btn.querySelector('.fa-edit')) return;
-      const row = btn.closest('tr');
-      if (!row) return;
-      const itemId = row.getAttribute('data-id');
-      if (!itemId) return;
-      alert('Edit icon clicked for itemId: ' + itemId);
-      // Place your modal logic here after confirming this works
+// SLM/SLAS Table Edit
+if (document.getElementById('slmTableBody')) {
+    document.getElementById('slmTableBody').addEventListener('click', function(e) {
+        console.log('Clicked in SLM table:', e.target);
+        const editBtnSlm = e.target.closest('.btn-icon');
+        if (!editBtnSlm || !editBtnSlm.querySelector('.fa-edit')) return;
+        const row = editBtnSlm.closest('tr');
+        if (!row) return;
+        const itemId = row.getAttribute('data-id');
+        if (!itemId) return;
+        const cells = row.children;
+        const itemData = {
+            title: cells[0].textContent,
+            subject: cells[1].textContent,
+            gradeLevel: cells[2].textContent,
+            quarter: cells[3].textContent,
+            quantity: cells[4].textContent,
+            status: cells[5].textContent,
+            description: ''
+        };
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit SLM/SLAS Item</h3>
+                    <button class="modal-close" onclick="this.closest('.modal').remove()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="editSlmForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editSlmTitle">Title</label>
+                                <input type="text" id="editSlmTitle" value="${itemData.title}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editSlmSubject">Subject</label>
+                                <input type="text" id="editSlmSubject" value="${itemData.subject}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editSlmGradeLevel">Grade Level</label>
+                                <input type="text" id="editSlmGradeLevel" value="${itemData.gradeLevel}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editSlmQuarter">Quarter</label>
+                                <input type="text" id="editSlmQuarter" value="${itemData.quarter}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editSlmQuantity">Quantity</label>
+                                <input type="number" id="editSlmQuantity" value="${itemData.quantity}" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editSlmStatus">Status</label>
+                                <input type="text" id="editSlmStatus" value="${itemData.status}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group" style="width:100%">
+                                <label for="editSlmDescription">Description</label>
+                                <textarea id="editSlmDescription" rows="2">${itemData.description}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-primary">Update Item</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        document.getElementById('editSlmForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const updatedItem = {
+                title: document.getElementById('editSlmTitle').value,
+                subject: document.getElementById('editSlmSubject').value,
+                gradeLevel: document.getElementById('editSlmGradeLevel').value,
+                quarter: document.getElementById('editSlmQuarter').value,
+                quantity: parseInt(document.getElementById('editSlmQuantity').value),
+                status: document.getElementById('editSlmStatus').value,
+                description: document.getElementById('editSlmDescription').value
+            };
+            try {
+                const res = await fetch(`/api/items/slm/${itemId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedItem)
+                });
+                if (res.ok) {
+                    showNotification('SLM/SLAS item updated!', 'success');
+                    modal.remove();
+                    loadItems();
+                } else {
+                    showNotification('Update failed', 'error');
+                }
+            } catch (err) {
+                showNotification('Error updating item', 'error');
+            }
+        });
     });
-  });
+}
+
+// Equipment Table Edit
+if (document.getElementById('equipmentTableBody')) {
+    document.getElementById('equipmentTableBody').addEventListener('click', function(e) {
+        console.log('Clicked in Equipment table:', e.target);
+        const editBtnEquipment = e.target.closest('.btn-icon');
+        if (!editBtnEquipment || !editBtnEquipment.querySelector('.fa-edit')) return;
+        const row = editBtnEquipment.closest('tr');
+        if (!row) return;
+        const itemId = row.getAttribute('data-id');
+        if (!itemId) return;
+        const cells = row.children;
+        const itemData = {
+            equipmentName: cells[0].textContent,
+            equipmentType: cells[1].textContent,
+            quantity: cells[2].textContent,
+            status: cells[3].textContent,
+            description: ''
+        };
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Equipment Item</h3>
+                    <button class="modal-close" onclick="this.closest('.modal').remove()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="editEquipmentForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editEquipmentName">Equipment Name</label>
+                                <input type="text" id="editEquipmentName" value="${itemData.equipmentName}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editEquipmentType">Equipment Type</label>
+                                <input type="text" id="editEquipmentType" value="${itemData.equipmentType}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editEquipmentQuantity">Quantity</label>
+                                <input type="number" id="editEquipmentQuantity" value="${itemData.quantity}" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editEquipmentStatus">Status</label>
+                                <input type="text" id="editEquipmentStatus" value="${itemData.status}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group" style="width:100%">
+                                <label for="editEquipmentDescription">Description</label>
+                                <textarea id="editEquipmentDescription" rows="2">${itemData.description}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-primary">Update Item</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        document.getElementById('editEquipmentForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const updatedItem = {
+                equipmentName: document.getElementById('editEquipmentName').value,
+                equipmentType: document.getElementById('editEquipmentType').value,
+                quantity: parseInt(document.getElementById('editEquipmentQuantity').value),
+                status: document.getElementById('editEquipmentStatus').value,
+                description: document.getElementById('editEquipmentDescription').value
+            };
+            try {
+                const res = await fetch(`/api/items/equipment/${itemId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedItem)
+                });
+                if (res.ok) {
+                    showNotification('Equipment item updated!', 'success');
+                    modal.remove();
+                    loadItems();
+                } else {
+                    showNotification('Update failed', 'error');
+                }
+            } catch (err) {
+                showNotification('Error updating item', 'error');
+            }
+        });
+    });
+}
+
+// TVL Table Edit
+if (document.getElementById('tvlTableBody')) {
+    document.getElementById('tvlTableBody').addEventListener('click', function(e) {
+        console.log('Clicked in TVL table:', e.target);
+        const editBtnTvl = e.target.closest('.btn-icon');
+        if (!editBtnTvl || !editBtnTvl.querySelector('.fa-edit')) return;
+        const row = editBtnTvl.closest('tr');
+        if (!row) return;
+        const itemId = row.getAttribute('data-id');
+        if (!itemId) return;
+        const cells = row.children;
+        const itemData = {
+            itemName: cells[0].textContent,
+            track: cells[1].textContent,
+            strand: cells[2].textContent,
+            gradeLevel: cells[3].textContent,
+            quantity: cells[4].textContent,
+            status: cells[5].textContent,
+            description: ''
+        };
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit TVL Item</h3>
+                    <button class="modal-close" onclick="this.closest('.modal').remove()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="editTvlForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editTvlName">Item Name</label>
+                                <input type="text" id="editTvlName" value="${itemData.itemName}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editTvlTrack">Track</label>
+                                <input type="text" id="editTvlTrack" value="${itemData.track}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editTvlStrand">Strand</label>
+                                <input type="text" id="editTvlStrand" value="${itemData.strand}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editTvlGradeLevel">Grade Level</label>
+                                <input type="text" id="editTvlGradeLevel" value="${itemData.gradeLevel}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editTvlQuantity">Quantity</label>
+                                <input type="number" id="editTvlQuantity" value="${itemData.quantity}" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editTvlStatus">Status</label>
+                                <input type="text" id="editTvlStatus" value="${itemData.status}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group" style="width:100%">
+                                <label for="editTvlDescription">Description</label>
+                                <textarea id="editTvlDescription" rows="2">${itemData.description}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-primary">Update Item</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        document.getElementById('editTvlForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const updatedItem = {
+                itemName: document.getElementById('editTvlName').value,
+                track: document.getElementById('editTvlTrack').value,
+                strand: document.getElementById('editTvlStrand').value,
+                gradeLevel: document.getElementById('editTvlGradeLevel').value,
+                quantity: parseInt(document.getElementById('editTvlQuantity').value),
+                status: document.getElementById('editTvlStatus').value,
+                description: document.getElementById('editTvlDescription').value
+            };
+            try {
+                const res = await fetch(`/api/items/tvl/${itemId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedItem)
+                });
+                if (res.ok) {
+                    showNotification('TVL item updated!', 'success');
+                    modal.remove();
+                    loadItems();
+                } else {
+                    showNotification('Update failed', 'error');
+                }
+            } catch (err) {
+                showNotification('Error updating item', 'error');
+            }
+        });
+    });
+}
+
+// Lesson Table Edit
+if (document.getElementById('lessonTableBody')) {
+    document.getElementById('lessonTableBody').addEventListener('click', function(e) {
+        console.log('Clicked in Lesson table:', e.target);
+        const editBtnLesson = e.target.closest('.btn-icon');
+        if (!editBtnLesson || !editBtnLesson.querySelector('.fa-edit')) return;
+        const row = editBtnLesson.closest('tr');
+        if (!row) return;
+        const itemId = row.getAttribute('data-id');
+        if (!itemId) return;
+        const cells = row.children;
+        const itemData = {
+            lessonTitle: cells[0].textContent,
+            subject: cells[1].textContent,
+            gradeLevel: cells[2].textContent,
+            quarter: cells[3].textContent,
+            week: cells[4].textContent,
+            status: cells[5].textContent,
+            description: ''
+        };
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Edit Lesson Exemplar Item</h3>
+                    <button class="modal-close" onclick="this.closest('.modal').remove()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="editLessonForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editLessonTitle">Lesson Title</label>
+                                <input type="text" id="editLessonTitle" value="${itemData.lessonTitle}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editLessonSubject">Subject</label>
+                                <input type="text" id="editLessonSubject" value="${itemData.subject}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editLessonGradeLevel">Grade Level</label>
+                                <input type="text" id="editLessonGradeLevel" value="${itemData.gradeLevel}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editLessonQuarter">Quarter</label>
+                                <input type="text" id="editLessonQuarter" value="${itemData.quarter}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="editLessonWeek">Week</label>
+                                <input type="number" id="editLessonWeek" value="${itemData.week}" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editLessonStatus">Status</label>
+                                <input type="text" id="editLessonStatus" value="${itemData.status}" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group" style="width:100%">
+                                <label for="editLessonDescription">Description</label>
+                                <textarea id="editLessonDescription" rows="2">${itemData.description}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" onclick="this.closest('.modal').remove()">Cancel</button>
+                            <button type="submit" class="btn-primary">Update Item</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modal);
+        document.getElementById('editLessonForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const updatedItem = {
+                lessonTitle: document.getElementById('editLessonTitle').value,
+                subject: document.getElementById('editLessonSubject').value,
+                gradeLevel: document.getElementById('editLessonGradeLevel').value,
+                quarter: document.getElementById('editLessonQuarter').value,
+                week: parseInt(document.getElementById('editLessonWeek').value),
+                status: document.getElementById('editLessonStatus').value,
+                description: document.getElementById('editLessonDescription').value
+            };
+            try {
+                const res = await fetch(`/api/items/lesson/${itemId}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(updatedItem)
+                });
+                if (res.ok) {
+                    showNotification('Lesson Exemplar item updated!', 'success');
+                    modal.remove();
+                    loadItems();
+                } else {
+                    showNotification('Update failed', 'error');
+                }
+            } catch (err) {
+                showNotification('Error updating item', 'error');
+            }
+        });
+    });
+}
+
+// --- Add Item Modal Submission Logic for Items Section ---
+document.addEventListener('DOMContentLoaded', function() {
+    // SLM/SLAS
+    const addSlmBtn = document.getElementById('addSlmBtn');
+    if (addSlmBtn) {
+        addSlmBtn.addEventListener('click', () => {
+            document.getElementById('addSlmModal').style.display = 'flex';
+            const addSlmForm = document.getElementById('addSlmForm');
+            // Remove any previous listener
+            addSlmForm.onsubmit = null;
+            addSlmForm.addEventListener('submit', async function handler(e) {
+                e.preventDefault();
+                console.log('SLM form submitted');
+                const data = {
+                    Title: document.getElementById('slmTitle').value,
+                    Subject: document.getElementById('slmSubject').value,
+                    GradeLevel: document.getElementById('slmGradeLevel').value,
+                    Quarter: document.getElementById('slmQuarter').value,
+                    Quantity: parseInt(document.getElementById('slmQuantity').value),
+                    Status: document.getElementById('slmStatus').value,
+                    Description: document.getElementById('slmDescription').value
+                };
+                console.log('Data to send:', data);
+                const res = await fetch('/api/items/slm', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                console.log('POST /api/items/slm response:', result);
+                if (res.ok) {
+                    showNotification('SLM/SLAS item added!', 'success');
+                    document.getElementById('addSlmModal').style.display = 'none';
+                    addSlmForm.reset();
+                    loadItems();
+                } else {
+                    showNotification('Failed to add SLM/SLAS item', 'error');
+                }
+                addSlmForm.removeEventListener('submit', handler);
+            }, { once: true });
+        });
+    }
+
+    // Equipment
+    const addEquipmentBtn = document.getElementById('addEquipmentBtn');
+    if (addEquipmentBtn) {
+        addEquipmentBtn.addEventListener('click', () => {
+            document.getElementById('addEquipmentModal').style.display = 'flex';
+            const addEquipmentForm = document.getElementById('addEquipmentForm');
+            addEquipmentForm.onsubmit = null;
+            addEquipmentForm.addEventListener('submit', async function handler(e) {
+                e.preventDefault();
+                console.log('Equipment form submitted');
+                const data = {
+                    EquipmentName: document.getElementById('equipmentName').value,
+                    EquipmentType: document.getElementById('equipmentType').value,
+                    Quantity: parseInt(document.getElementById('equipmentQuantity').value),
+                    Status: document.getElementById('equipmentStatus').value,
+                    Description: document.getElementById('equipmentDescription').value
+                };
+                console.log('Data to send:', data);
+                const res = await fetch('/api/items/equipment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                console.log('POST /api/items/equipment response:', result);
+                if (res.ok) {
+                    showNotification('Equipment item added!', 'success');
+                    document.getElementById('addEquipmentModal').style.display = 'none';
+                    addEquipmentForm.reset();
+                    loadItems();
+                } else {
+                    showNotification('Failed to add equipment item', 'error');
+                }
+                addEquipmentForm.removeEventListener('submit', handler);
+            }, { once: true });
+        });
+    }
+
+    // TVL
+    const addTvlBtn = document.getElementById('addTvlBtn');
+    if (addTvlBtn) {
+        addTvlBtn.addEventListener('click', () => {
+            document.getElementById('addTvlModal').style.display = 'flex';
+            const addTvlForm = document.getElementById('addTvlForm');
+            addTvlForm.onsubmit = null;
+            addTvlForm.addEventListener('submit', async function handler(e) {
+                e.preventDefault();
+                console.log('TVL form submitted');
+                const data = {
+                    ItemName: document.getElementById('tvlName').value,
+                    Track: document.getElementById('tvlTrack').value,
+                    Strand: document.getElementById('tvlStrand').value,
+                    GradeLevel: document.getElementById('tvlGradeLevel').value,
+                    Quantity: parseInt(document.getElementById('tvlQuantity').value),
+                    Status: document.getElementById('tvlStatus').value,
+                    Description: document.getElementById('tvlDescription').value
+                };
+                console.log('Data to send:', data);
+                const res = await fetch('/api/items/tvl', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                console.log('POST /api/items/tvl response:', result);
+                if (res.ok) {
+                    showNotification('TVL item added!', 'success');
+                    document.getElementById('addTvlModal').style.display = 'none';
+                    addTvlForm.reset();
+                    loadItems();
+                } else {
+                    showNotification('Failed to add TVL item', 'error');
+                }
+                addTvlForm.removeEventListener('submit', handler);
+            }, { once: true });
+        });
+    }
+
+    // Lesson Exemplar
+    const addLessonBtn = document.getElementById('addLessonBtn');
+    if (addLessonBtn) {
+        addLessonBtn.addEventListener('click', () => {
+            document.getElementById('addLessonModal').style.display = 'flex';
+            const addLessonForm = document.getElementById('addLessonForm');
+            addLessonForm.onsubmit = null;
+            addLessonForm.addEventListener('submit', async function handler(e) {
+                e.preventDefault();
+                console.log('Lesson form submitted');
+                const data = {
+                    LessonTitle: document.getElementById('lessonTitle').value,
+                    Subject: document.getElementById('lessonSubject').value,
+                    GradeLevel: document.getElementById('lessonGradeLevel').value,
+                    Quarter: document.getElementById('lessonQuarter').value,
+                    Week: parseInt(document.getElementById('lessonWeek').value),
+                    Status: document.getElementById('lessonStatus').value,
+                    Description: document.getElementById('lessonDescription').value
+                };
+                console.log('Data to send:', data);
+                const res = await fetch('/api/items/lesson', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                console.log('POST /api/items/lesson response:', result);
+                if (res.ok) {
+                    showNotification('Lesson Exemplar item added!', 'success');
+                    document.getElementById('addLessonModal').style.display = 'none';
+                    addLessonForm.reset();
+                    loadItems();
+                } else {
+                    showNotification('Failed to add lesson exemplar item', 'error');
+                }
+                addLessonForm.removeEventListener('submit', handler);
+            }, { once: true });
+        });
+    }
 });
+// --- End Add Item Modal Submission Logic ---
+
+function loadItems() {
+    // Determine active category
+    let activeCategory = 'slm';
+    const navBtns = document.querySelectorAll('.item-nav-btn');
+    navBtns.forEach(btn => {
+        if (btn.classList.contains('active')) {
+            activeCategory = btn.getAttribute('data-category');
+        }
+    });
+
+    // Map category to endpoint and table body
+    const config = {
+        slm: {
+            endpoint: '/api/items/slm',
+            tableBodyId: 'slmTableBody',
+            renderRow: item => `
+                <td>${item.Title || ''}</td>
+                <td>${item.Subject || ''}</td>
+                <td>${item.GradeLevel || ''}</td>
+                <td>${item.Quarter || ''}</td>
+                <td>${item.Quantity || ''}</td>
+                <td>${item.Status || ''}</td>
+                <td><!-- Actions --></td>
+            `
+        },
+        equipment: {
+            endpoint: '/api/items/equipment',
+            tableBodyId: 'equipmentTableBody',
+            renderRow: item => `
+                <td>${item.EquipmentName || ''}</td>
+                <td>${item.EquipmentType || ''}</td>
+                <td>${item.Quantity || ''}</td>
+                <td>${item.Status || ''}</td>
+                <td><!-- Actions --></td>
+            `
+        },
+        tvl: {
+            endpoint: '/api/items/tvl',
+            tableBodyId: 'tvlTableBody',
+            renderRow: item => `
+                <td>${item.ItemName || ''}</td>
+                <td>${item.Track || ''}</td>
+                <td>${item.Strand || ''}</td>
+                <td>${item.GradeLevel || ''}</td>
+                <td>${item.Quantity || ''}</td>
+                <td>${item.Status || ''}</td>
+                <td><!-- Actions --></td>
+            `
+        },
+        lesson: {
+            endpoint: '/api/items/lesson',
+            tableBodyId: 'lessonTableBody',
+            renderRow: item => `
+                <td>${item.LessonTitle || ''}</td>
+                <td>${item.Subject || ''}</td>
+                <td>${item.GradeLevel || ''}</td>
+                <td>${item.Quarter || ''}</td>
+                <td>${item.Week || ''}</td>
+                <td>${item.Status || ''}</td>
+                <td><!-- Actions --></td>
+            `
+        }
+    };
+
+    const { endpoint, tableBodyId, renderRow } = config[activeCategory];
+    const tableBody = document.getElementById(tableBodyId);
+    if (!tableBody) return;
+    tableBody.innerHTML = '<tr><td colspan="7">Loading...</td></tr>';
+
+    fetch(endpoint)
+        .then(res => res.json())
+        .then(items => {
+            tableBody.innerHTML = '';
+            if (!items || items.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#888;">No items found.</td></tr>';
+                return;
+            }
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = renderRow(item);
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(err => {
+            tableBody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#e53e3e;">Failed to load items.</td></tr>';
+            console.error('Error loading items:', err);
+        });
+}
+ip
